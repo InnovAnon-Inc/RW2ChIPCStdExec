@@ -3,7 +3,6 @@
 #endif
 
 #include <assert.h>
-#include <stdio.h>
 
 #include <restart.h>
 
@@ -32,35 +31,30 @@ static int myparentcb (pid_t cpid, fd_t rd, fd_t wr, void *restrict args) {
    char (*restrict src )[] = pargs->src;
    size_t srcsz                      = pargs->srcsz;
 
-   ssize_t countwr = 0;
-   ssize_t count = 0;
+   size_t  totwr = 0;
+   size_t  totrd = 0;
 
    /* TODO read/write fully */
 
-   while ((size_t) countwr != srcsz || (count != countwr && destsz > (size_t) count)) {
-   if ((size_t) countwr != srcsz) { 
-   /* Write to child’s stdin */
-   error_check (countwr = r_write (wr, (*src) + (size_t) countwr, srcsz - (size_t) countwr) == -1) return -1;
-   if (countwr != 0)
-   printf ("countwr: %d\n", (int) countwr);
-   }
+   while (totwr != srcsz && totrd != destsz) {
+      ssize_t cntwr, cntrd;
 
-   if (count != countwr && destsz > (size_t) count) { 
-   /* Read from child’s stdout */
-   count = r_read (rd, (*dest) + (size_t) count, destsz - (size_t) count);
-   error_check (count == -1) return -2;
-   /*if (count >= 0) {
-   buffer[count] = 0;
-   printf("%s", buffer);
-   } else {
-   printf("IO Error\n");
-   }*/
-   }
+      /* Write to child’s stdin */
+      cntwr = r_write (wr, &((*src)[totwr]), srcsz - totwr);
+      error_check (cntwr == -1) return -1;
+      if (cntwr != 0)
+
+      /* Read from child’s stdout */
+      cntrd = r_read (rd, &((*dest)[totrd]), destsz - totrd);
+      error_check (cntrd == -1) return -2;
+
+      totwr += (size_t) cntwr;
+      totrd += (size_t) cntrd;
    }
 
    assert (dest     != NULL);
    assert (parentcb != NULL);
-   return parentcb (dest, (size_t) count, parent_args);
+   return parentcb (dest, (size_t) totrd, parent_args);
 }
 
 __attribute__ ((nonnull (1, 3), warn_unused_result))
