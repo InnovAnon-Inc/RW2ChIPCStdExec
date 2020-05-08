@@ -42,7 +42,6 @@ static int myparentcb (pid_t cpid, fd_t rd, fd_t wr, void *restrict args) {
       /* Write to child’s stdin */
       cntwr = r_write (wr, &((*src)[totwr]), srcsz - totwr);
       error_check (cntwr == -1) return -1;
-      if (cntwr != 0)
 
       /* Read from child’s stdout */
       cntrd = r_read (rd, &((*dest)[totrd]), destsz - totrd);
