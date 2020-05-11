@@ -1,3 +1,3 @@
-include ../RW2ChIPCStd/src/Makefile-LIBADD.inc
+include ../../RW2ChIPCStd/src/Makefile-LIBADD.inc
 
 LIBRW2CHIPCSTDEXEC_LIBADD = -lrw2chipcstd $(LIBRW2CHIPCSTD_LIBADD)
