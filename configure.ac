@@ -22,7 +22,8 @@ AC_CHECK_HEADERS([glitter.h ezfork.h restart.h sfork.h rw2chipc.h rw2chipcstd.h]
 
 AC_CHECK_LIB([stdlib],[fork],[ezfork],[restart],[sfork],[rw2chipc],[rw2chipcstd])
 
-LIBRW2CHIPCSTDEXEC_LIBADD="`PATH=src:$PATH librw2chipcstdexec_config --libs`"
+srcdir = @srcdir@
+LIBRW2CHIPCSTDEXEC_LIBADD="`PATH=$(srcdir)src:$PATH librw2chipcstdexec_config --libs`"
 AC_SUBST(LIBRW2CHIPCSTDEXEC)
 
 INNOVANON_WARNINGS([])
