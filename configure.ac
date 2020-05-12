@@ -24,7 +24,7 @@ AC_CHECK_LIB([stdlib],[fork],[ezfork],[restart],[sfork],[rw2chipc],[rw2chipcstd]
 
 srcdir = @srcdir@
 LIBRW2CHIPCSTDEXEC_LIBADD="`PATH=$(srcdir)src:$PATH librw2chipcstdexec_config --libs`"
-AC_SUBST(LIBRW2CHIPCSTDEXEC)
+AC_SUBST(LIBRW2CHIPCSTDEXEC_LIBADD)
 
 INNOVANON_WARNINGS([])
 
