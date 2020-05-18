@@ -1,0 +1,15 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+#rw2chipcstdexec_utility=rw2chipcstdexec-test
+
+Name: @PACKAGE_NAME@
+Description: rw2chipcstdexec library
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lrw2chipcstdexec
+Cflags: -I${includedir}
+Requires: glitter librw2chipcstd
+Requires.private: librestart
+
